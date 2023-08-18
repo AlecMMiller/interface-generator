@@ -1,0 +1,29 @@
+{
+  "name": "@alecmmiller/interface-generator",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "https://github.com/AlecMMiller/interface-generator.git",
+  "author": "Alec Miller <alecmichaelmiller@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "lint": "ts-standard",
+    "prepare": "husky install",
+    "semantic-release": "semantic-release --branches main"
+  },
+  "peerDependencies": {
+    "@alecmmiller/nestjs-client-generator": "^1.2.0"
+  },
+  "devDependencies": {
+    "@alecmmiller/nestjs-client-generator": "^1.2.0",
+    "@types/node": "^20.5.0",
+    "husky": "^8.0.3",
+    "semantic-release": "^21.0.7",
+    "ts-standard": "^12.0.2",
+    "typescript": "^5.1.6"
+  }
+}
