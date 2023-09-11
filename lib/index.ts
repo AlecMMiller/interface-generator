@@ -63,6 +63,7 @@ export function generator (representation: Interfaces.ApplicationRepresentation)
   const license = packageJson.license as string
   const sourceTypescriptVersion = packageJson.devDependencies.typescript as string
   const sourceRepo = packageJson.repository as string
+  const version = packageJson.version as string
   const outputPackageName = `${name}-interfaces`
 
   let repoInfo = ''
@@ -73,7 +74,7 @@ export function generator (representation: Interfaces.ApplicationRepresentation)
 
   const outputPackageJson = {
     name: outputPackageName,
-    version: '0.0.0-development',
+    version,
     description: `Auto-generated API interface files for ${name}${repoInfo}`,
     main: 'lib/index.js',
     types: 'lib/index.d.ts',
