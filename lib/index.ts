@@ -36,10 +36,10 @@ function makeEntry (entry: ObjectEntry): string[] {
 }
 
 function makeInterface (name: string, entries: ObjectEntries): string {
-  const premable = `interface ${name} {`
+  const preamble = `interface ${name} {`
   const fields = entries.flatMap(entry => makeEntry(entry))
   fields[fields.length] = '}'
-  const output = [premable, ...fields].join('\n')
+  const output = [preamble, ...fields].join('\n')
   return output
 }
 
@@ -47,9 +47,47 @@ export function generator (representation: Interfaces.ApplicationRepresentation)
   const interfaces = Array.from(representation.schema).map(schema => makeInterface(...schema))
 
   const generatedPath = './generated'
+  const srcPath = `${generatedPath}/src`
   if (!fs.existsSync(generatedPath)) {
     fs.mkdirSync(generatedPath)
   }
-  fs.writeFileSync(`${generatedPath}/index.ts`, interfaces.join('\n'))
-  console.log(interfaces.join('\n'))
+
+  if (!fs.existsSync(srcPath)) {
+    fs.mkdirSync(srcPath)
+  }
+
+  fs.writeFileSync(`${generatedPath}/src/index.ts`, interfaces.join('\n'))
+
+  const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'))
+  const name = packageJson.name as string
+  const license = packageJson.license as string
+  const sourceTypescriptVersion = packageJson.devDependencies.typescript as string
+  const sourceRepo = packageJson.repository as string
+  const outputPackageName = `${name}-interfaces`
+
+  let repoInfo = ''
+
+  if (sourceRepo !== undefined) {
+    repoInfo = ` - see ${sourceRepo} for more information.`
+  }
+
+  const outputPackageJson = {
+    name: outputPackageName,
+    version: '0.0.0-development',
+    description: `Auto-generated API interface files for ${name}${repoInfo}`,
+    main: 'lib/index.js',
+    types: 'lib/index.d.ts',
+    license,
+    files: [
+      'lib/**/*'
+    ],
+    devDependencies: {
+      typescript: sourceTypescriptVersion
+    },
+    scripts: {
+      build: 'tsc'
+    }
+  }
+
+  fs.writeFileSync(`${generatedPath}/package.json`, JSON.stringify(outputPackageJson, null, 2))
 }
