@@ -90,4 +90,16 @@ export function generator (representation: Interfaces.ApplicationRepresentation)
   }
 
   fs.writeFileSync(`${generatedPath}/package.json`, JSON.stringify(outputPackageJson, null, 2))
+
+  const outputTsConfig = {
+    compilerOptions: {
+      module: 'commonjs',
+      target: 'es5',
+      declarations: true,
+      outDir: 'lib',
+      strict: true
+    }
+  }
+
+  fs.writeFileSync(`${generatedPath}/tsconfig.json`, JSON.stringify(outputTsConfig, null, 2))
 }
