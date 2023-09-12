@@ -96,7 +96,7 @@ export function generator (representation: Interfaces.ApplicationRepresentation)
     compilerOptions: {
       module: 'commonjs',
       target: 'es5',
-      declarations: true,
+      declaration: true,
       outDir: 'lib',
       strict: true
     }
