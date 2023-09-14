@@ -1,8 +1,7 @@
 import { Interfaces } from '@alecmmiller/nestjs-client-generator'
-import { ObjectEntries, ObjectEntry } from '@alecmmiller/nestjs-client-generator/dist/interfaces/output/types'
 import * as fs from 'fs'
 
-function makeDocs (entry: ObjectEntry): string[] {
+function makeDocs (entry: Interfaces.PropertyInfo): string[] {
   const lines = new Array<string>()
 
   if (entry.description !== undefined) {
@@ -21,9 +20,9 @@ function makeDocs (entry: ObjectEntry): string[] {
   return lines
 }
 
-function makeEntry (entry: ObjectEntry): string[] {
-  const fieldName = entry.key
-  const fieldType = entry.valueType
+function makeEntry (entry: Interfaces.PropertyInfo): string[] {
+  const fieldName = entry.name
+  const fieldType = entry.type
 
   let implementation = `\t${fieldName}: ${fieldType}`
   if (entry?.isArray === true) {
@@ -35,7 +34,7 @@ function makeEntry (entry: ObjectEntry): string[] {
   return [...docs, implementation, '']
 }
 
-function makeInterface (name: string, entries: ObjectEntries): string {
+function makeInterface (name: string, entries: Interfaces.ObjectInfo): string {
   const preamble = `interface ${name} {`
   const fields = entries.flatMap(entry => makeEntry(entry))
   fields[fields.length] = '}'
@@ -43,8 +42,8 @@ function makeInterface (name: string, entries: ObjectEntries): string {
   return output
 }
 
-export function generator (representation: Interfaces.ApplicationRepresentation): void {
-  const interfaces = Array.from(representation.schema).map(schema => makeInterface(...schema))
+export function generator (representation: Interfaces.Definitions): void {
+  const interfaces = Array.from(representation.objects).map(schema => makeInterface(...schema))
 
   const generatedPath = './generated'
   const srcPath = `${generatedPath}/src`
