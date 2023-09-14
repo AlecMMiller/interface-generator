@@ -7,10 +7,10 @@
   resolved "https://registry.yarnpkg.com/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz#bd9154aec9983f77b3a034ecaa015c2e4201f6cf"
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
-"@alecmmiller/nestjs-client-generator@^1.4.1":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@alecmmiller/nestjs-client-generator/-/nestjs-client-generator-1.4.1.tgz#a5a814fab6075a96a28bfb55b91b1f4e1ff1a28e"
-  integrity sha512-pGSomPxUuhnYKqLDGrqrFAmFMxnfeYAX8oqWZj0Ha0hfykw0M1m8gHC47a79AAC7709F646Mz+we6Zt+liHyqw==
+"@alecmmiller/nestjs-client-generator@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@alecmmiller/nestjs-client-generator/-/nestjs-client-generator-1.4.2.tgz#f8f5acce4c95e4c57264741a9e98c56988b17fe6"
+  integrity sha512-yC+Nz34l5swImZrqZInv1kjLPFQHtMUYiIpLJZKgyd0G38LTmSi8Ti2qw31XGOSGTd7ql3OLUFBR7oRggJTVsQ==
   dependencies:
     "@nestjs/swagger" "^7.1.6"
     "@types/node" "^20.4.6"
