@@ -42,8 +42,21 @@ function makeInterface (name: string, entries: Interfaces.ObjectInfo): string {
   return output
 }
 
-export function generator (representation: Interfaces.Definitions): void {
-  const interfaces = Array.from(representation.objects).map(schema => makeInterface(...schema))
+function makeEnum (enumInfo: Interfaces.EnumInfo): string {
+  const preamble = `enum ${enumInfo.name} {`
+  const fields = enumInfo.values.map(entry => `\t${entry.name} = "${entry.value}",`)
+  fields[fields.length] = '}'
+  const output = [preamble, ...fields].join('\n')
+  return output
+}
+
+export function generator (representation: Interfaces.ProjectDefinition): void {
+  const definitions = representation.definitions
+  const objects = definitions.objects
+  const interfaces = Array.from(objects).map(schema => makeInterface(...schema))
+  const enumDefinitions = Array.from(definitions.enums).map(enumInfo => makeEnum(enumInfo[1]))
+
+  const outputText = [...interfaces, ...enumDefinitions].join('\n\n')
 
   const generatedPath = './generated'
   const srcPath = `${generatedPath}/src`
@@ -55,7 +68,7 @@ export function generator (representation: Interfaces.Definitions): void {
     fs.mkdirSync(srcPath)
   }
 
-  fs.writeFileSync(`${generatedPath}/src/index.ts`, interfaces.join('\n'))
+  fs.writeFileSync(`${generatedPath}/src/index.ts`, outputText)
 
   const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'))
   const name = packageJson.name as string
