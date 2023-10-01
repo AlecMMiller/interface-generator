@@ -35,7 +35,7 @@ function makeEntry (entry: Interfaces.PropertyInfo): string[] {
 }
 
 function makeInterface (name: string, entries: Interfaces.ObjectInfo): string {
-  const preamble = `interface ${name} {`
+  const preamble = `export interface ${name} {`
   const fields = entries.flatMap(entry => makeEntry(entry))
   fields[fields.length] = '}'
   const output = [preamble, ...fields].join('\n')
@@ -43,7 +43,7 @@ function makeInterface (name: string, entries: Interfaces.ObjectInfo): string {
 }
 
 function makeEnum (enumInfo: Interfaces.EnumInfo): string {
-  const preamble = `enum ${enumInfo.name} {`
+  const preamble = `export enum ${enumInfo.name} {`
   const fields = enumInfo.values.map(entry => `\t${entry.name} = "${entry.value}",`)
   fields[fields.length] = '}'
   const output = [preamble, ...fields].join('\n')
