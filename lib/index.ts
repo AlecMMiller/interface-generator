@@ -24,7 +24,9 @@ function makeEntry (entry: Interfaces.PropertyInfo): string[] {
   const fieldName = entry.name
   const fieldType = entry.type
 
-  let implementation = `\t${fieldName}: ${fieldType}`
+  const optional = entry.required === false ? '?' : ''
+
+  let implementation = `\t${fieldName}${optional}: ${fieldType}`
   if (entry?.isArray === true) {
     implementation += '[]'
   }
